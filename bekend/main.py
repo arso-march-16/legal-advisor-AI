@@ -6,14 +6,14 @@ app = FastAPI() # osnova postavljanja ruta u API strukturi preko FastAPI-ja
 
 # Model API zahtijeva da korisnički unos bude striktno string, što pydantic.BaseModel to temeljno provjerava
 class ChatRequest(BaseModel):
-    pitanje: str
+    question: str
 
 # u nastavku je API redirekcija u URL "/chat" stranicu kao odgovor na korisnički upit (prompt)
 # obavlja se pokušaj pribavljanja odgovora, koji, u slučaju neuspjeha, vraća HTTP tip greške (kod 500) sa potrebnim specifikacijama greške u konekciji
 @app.post("/chat")
 async def chat(request: ChatRequest):
     try:
-        response = ask_openai_legal_advisor(request.pitanje) # odgovor funkcije na postavljeno korisničko pitanje... 
+        response = ask_openai_legal_advisor(request.question) # odgovor funkcije na postavljeno korisničko pitanje... 
         return {"response": response} #... se vraća funkciji chat kao odgovor u vidu JSON formata
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -11,9 +11,9 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise ValueError("OPENAI_API_KEY nije pronađen. Postavi ga u .env fajl.")
 
-klijent=OpenAI(api_key=OPENAI_API_KEY) # postavljanje objekta komunikacije sa gpt modelom
+klijent=OpenAI() # postavljanje objekta komunikacije sa gpt modelom
 
-def ask_openai_legal_advisor(pitanje: str) -> str: # funkcija kreiranja pitanja i odgovora na relaciji korisnik-model
+def ask_openai_legal_advisor(question: str) -> str: # funkcija kreiranja pitanja i odgovora na relaciji korisnik-model
     # pokušava se u try bloku da se obavi konekcija sa OpenAI API 
     try:
         response = klijent.chat.completions.create( # kreiranje komunikacije izmedju GPT modela i korisnika
@@ -24,7 +24,7 @@ def ask_openai_legal_advisor(pitanje: str) -> str: # funkcija kreiranja pitanja 
                     "Provide accurate and concise legal advice in a formal tone. "
                     "Do not offer medical, financial, or personal advice beyond legal matters."
                 )}, # podešavanje uloge GPT modela, u smislu njegove struke, kakve odgovore da daje, u kakvom načinu govora, koja su mu ograničenja (limitations) 
-                {"role": "user", "content": pitanje} # podešavanje uloge korisnika i pitanja na koje GPT model odgovara
+                {"role": "user", "content": question} # podešavanje uloge korisnika i pitanja na koje GPT model odgovara
             ],
             temperature=0.3,  # Niža temperatura omogućava preciznije odgovore, a veća kreativnije odgovore
             max_tokens=500 # podešavanje dužine odgovora GPT modela na korisničko pitanje (500 je za precizne odgovore sasvim dovoljno)
