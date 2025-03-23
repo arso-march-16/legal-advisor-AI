@@ -4,7 +4,7 @@ import requests
 # Backend API URL
 API_URL = "http://127.0.0.1:8000/chat"
 
-# Funkcija za slanje upita bekendu
+# Funkcija za slanje upita bekendu, ukoliko je 200 (OK) kod u pitanju, onda se vraća odgovor u vidu JSON formata, u protivnom javlja grešku
 def get_legal_advice(question):
     response = requests.post(API_URL, json={"question": question})
     if response.status_code == 200:
@@ -12,7 +12,7 @@ def get_legal_advice(question):
     else:
         return "Error: Unable to get a response from the server."
 
-# UI dizajn
+# UI dizajn za tab stranice (aplikacije)
 st.set_page_config(page_title="Legal Advisor AI", page_icon=":classical_building:", layout="centered")
 
 # Naslov aplikacije
@@ -25,7 +25,8 @@ if "chat_history" not in st.session_state:
 
 # Input polje za korisnička pitanja
 user_input = st.text_input(":memo: Unesite svoje pravno pitanje:", placeholder="Ovdje upišite Vaše pitanje...", help="Postavite pitanje koje se odnosi na pravne savjete.")
-
+# klikom na dugme "Pošalji" spinner se pojavljuje koji daje uvid korisniku da se nešto dešava "iza scene"
+# dobija se odgovor od strane AI servera i čuva se u istoriji ćaskanja i prikazuje na uvid korisniku
 if st.button(":package: Pošalji"):
     if user_input.strip():
         with st.spinner(":timer_clock: AI analizira vaše pitanje..."):
@@ -34,57 +35,47 @@ if st.button(":package: Pošalji"):
         st.session_state.chat_history.append(("Vi", user_input))
         st.session_state.chat_history.append(("Legal Advisor AI", ai_response))
 
-# Naslov
-st.divider()
-st.markdown("<div style='text-align: center; font-size: 16px;'>Testirajte i druge GPT modele</div>",
-    unsafe_allow_html=True)
-
-# Kreiranje kolona za slike
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    st.markdown(
-        """
-        <a href='https://chatgpt.com/' target='_blank'>
-            <img src='https://logowik.com/content/uploads/images/chatgpt5223.logowik.com.webp' alt='GPT Model 1'  style='width:50%;height:auto;display:block;margin:auto;'>
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
-
-with col2:
-    st.markdown(
-        """
-        <a href='https://www.claude.ai' target='_blank'>
-            <img src='https://logowik.com/content/uploads/images/claude4477.logowik.com.webp' alt='GPT Model 2'  style='width:50%;height:auto;display:block;margin:auto;'>
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
-
-with col3:
-    st.markdown(
-        """
-        <a href='https://x.ai/' target='_blank'>
-            <img src='https://logowik.com/content/uploads/images/grok-ai1793.logowik.com.webp' alt='GPT Model 3'  style='width:50%;height:auto;display:block;margin:auto;'>
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
-
-with col4:
-    st.markdown(
-        """
-        <a href='https://chat.mistral.ai/chat' target='_blank'>
-            <img src='https://logowik.com/content/uploads/images/mistral-ai-20252037.logowik.com.webp' alt='GPT Model 4'  style='width:50%;height:auto;display:block;margin:auto;'>
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
-
-st.divider()
+# Sidebar sadržaj, sa ikonicama za odlazak na druge linkove (tačnije modele)
+# uključena sekcija "O aplikaciji" i "Sva prava zadržana"
+with st.sidebar:
+    st.markdown(f"""
+    <div style='text-align: center; padding: 15px 0;'>
+        <h1 style='color: white;'>👨‍⚖️ Legal Advisor AI</h1>
+        <h4 style='color: #E0E1DD;'>Vaš AI pravni savjetnik</h4>
+    </div>
+    """, unsafe_allow_html=True)
     
-
+    st.markdown("## O aplikaciji")
+    st.markdown("Legal Advisor AI vam pomaže da dobijete brze pravne savjete koristeći naprednu AI tehnologiju.")
+    
+    st.markdown("## Testirajte i druge modele")
+    
+    # Linkovi ka drugim AI modelima prikazani slikama u sidebar-u
+    st.markdown("""
+    <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;'>
+        <a href='https://chatgpt.com/' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/chatgpt5223.logowik.com.webp' 
+                 alt='ChatGPT' style='width:100%; border-radius: 8px;'>
+        </a>
+        <a href='https://www.claude.ai' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/claude4477.logowik.com.webp' 
+                 alt='Claude' style='width:100%; border-radius: 8px;'>
+        </a>
+        <a href='https://x.ai/' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/grok-ai1793.logowik.com.webp' 
+                 alt='Grok' style='width:100%; border-radius: 8px;'>
+        </a>
+        <a href='https://chat.mistral.ai/chat' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/mistral-ai-20252037.logowik.com.webp' 
+                 alt='Mistral' style='width:100%; border-radius: 8px;'>
+        </a>
+    </div>
+                        <div style='text-align: center; padding: 20px 0; color: #aaa; font-size: 12px;'>
+    © 2025 Legal Advisor AI | Sva prava zadržana | Ovo nije zamjena za profesionalni pravni savjet
+</div>
+    """, unsafe_allow_html=True)
+    
+# relacija korisnik-AI i prikaz istorije njihovog razgovora (pitanja i odgovori)
 st.markdown("### :mailbox_with_mail: Istorija razgovora:")
 for role, text in st.session_state.chat_history:
     if role == "Vi":
@@ -95,7 +86,7 @@ for role, text in st.session_state.chat_history:
 # Dodavanje teksta povrh dugmadi za ocenjivanje
         st.markdown("<div style='color:orange; font-size:18px;'>Da li vam je ovaj odgovor bio koristan ili ne?</div>",unsafe_allow_html=True)
         
-# Kreiranje dugmadi u istom redu sa minimalnim razmakom
+# Kreiranje dugmadi za like/dislike koja ne rade na njihov pritisak u istom redu sa minimalnim razmakom
         st.markdown(
             f"""
             <div style="display: flex; gap: 8px; align-items: center;">
@@ -105,7 +96,7 @@ for role, text in st.session_state.chat_history:
             """,
             unsafe_allow_html=True,
         )
-
+# opšta podešavanja za celi dokument su u nastavku
 st.markdown("""
 <style>
     body {
