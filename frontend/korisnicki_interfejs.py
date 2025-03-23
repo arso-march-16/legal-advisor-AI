@@ -13,43 +13,98 @@ def get_legal_advice(question):
         return "Error: Unable to get a response from the server."
 
 # UI dizajn
-st.set_page_config(page_title="Legal Advisor AI", page_icon="⚖️", layout="centered")
+st.set_page_config(page_title="Legal Advisor AI", page_icon=":classical_building:", layout="centered")
 
 # Naslov aplikacije
-st.title("⚖️ Legal Advisor AI Chatbot")
-st.markdown("Postavite pravno pitanje i dobijte odgovor od AI pravnog savetnika.")
+st.title(":male-judge: Legal Advisor AI Chatbot")
+st.markdown("<div style='font-size:20px;color:yellow;'>Postavite pravno pitanje i dobijte odgovor od AI pravnog savjetnika.</div>",unsafe_allow_html=True)
 
 # Memorija razgovora (istorija pitanja i odgovora)
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
 # Input polje za korisnička pitanja
-user_input = st.text_input("📝 Unesite svoje pravno pitanje:")
+user_input = st.text_input(":memo: Unesite svoje pravno pitanje:", placeholder="Ovdje upišite Vaše pitanje...", help="Postavite pitanje koje se odnosi na pravne savjete.")
 
-if st.button("📨 Pošalji"):
+if st.button(":package: Pošalji"):
     if user_input.strip():
-        with st.spinner("⏳ AI analizira vaše pitanje..."):
+        with st.spinner(":timer_clock: AI analizira vaše pitanje..."):
             ai_response = get_legal_advice(user_input)
         
         st.session_state.chat_history.append(("Vi", user_input))
         st.session_state.chat_history.append(("Legal Advisor AI", ai_response))
+
+# Naslov
+st.divider()
+st.markdown("<div style='text-align: center; font-size: 16px;'>Testirajte i druge GPT modele</div>",
+    unsafe_allow_html=True)
+
+# Kreiranje kolona za slike
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.markdown(
+        """
+        <a href='https://chatgpt.com/' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/chatgpt5223.logowik.com.webp' alt='GPT Model 1'  style='width:50%;height:auto;display:block;margin:auto;'>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
+
+with col2:
+    st.markdown(
+        """
+        <a href='https://www.claude.ai' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/claude4477.logowik.com.webp' alt='GPT Model 2'  style='width:50%;height:auto;display:block;margin:auto;'>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
+
+with col3:
+    st.markdown(
+        """
+        <a href='https://x.ai/' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/grok-ai1793.logowik.com.webp' alt='GPT Model 3'  style='width:50%;height:auto;display:block;margin:auto;'>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
+
+with col4:
+    st.markdown(
+        """
+        <a href='https://chat.mistral.ai/chat' target='_blank'>
+            <img src='https://logowik.com/content/uploads/images/mistral-ai-20252037.logowik.com.webp' alt='GPT Model 4'  style='width:50%;height:auto;display:block;margin:auto;'>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
+
+st.divider()
     
 
-st.markdown("### 📜 Istorija razgovora:")
+st.markdown("### :mailbox_with_mail: Istorija razgovora:")
 for role, text in st.session_state.chat_history:
     if role == "Vi":
-        st.markdown(f"**🧑‍💼 {role}:** {text}")
+        st.markdown(f"**:male-office-worker: {role}:** {text}")
     else:
-        st.markdown(f"**🤖 {role}:** {text}")
+        st.markdown(f"**:robot_face: {role}:** {text}")
 
-        col1, col2 = st.columns([1, 1])
-        with col1:
-            st.button("👍", key=f"like_{text}")
-        with col2:
-            st.button("👎", key=f"dislike_{text}")
-
-if st.button("🗑️ Resetuj razgovor"):
-    st.session_state.chat_history = []
+# Dodavanje teksta povrh dugmadi za ocenjivanje
+        st.markdown("<div style='color:orange; font-size:18px;'>Da li vam je ovaj odgovor bio koristan ili ne?</div>",unsafe_allow_html=True)
+        
+# Kreiranje dugmadi u istom redu sa minimalnim razmakom
+        st.markdown(
+            f"""
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button style="background-color: black; border: 1px solid white; border-radius: 5px; padding: 5px 10px; cursor: pointer;" onclick="document.getElementById('like_{text}').click()"> 👍 Korisno</button>
+                <button style="background-color: black; border: 1px solid white; border-radius: 5px; padding: 5px 10px; cursor: pointer;" onclick="document.getElementById('dislike_{text}').click()">👎 Nije korisno</button>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 st.markdown("""
 <style>
