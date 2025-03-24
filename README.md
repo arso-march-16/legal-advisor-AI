@@ -27,16 +27,16 @@ Ova aplikacija je implementirana koristeći FastAPI za bekend i Streamlit za fro
 
 --Struktura direktorijuma
 
->Legal Advisor AI folder
---> README.md
---> requirements.txt
---> bekend folder
-------> pycache folder
-------> .env fajl
-------> main.py fajl
-------> openai_api_konekcija.py fajl
---> frontend
-------> korisnicki_interfejs.py
+Legal Advisor AI folder
+  README.md
+  requirements.txt
+  bekend folder
+    pycache folder
+    .env fajl
+    main.py fajl
+    openai_api_konekcija.py fajl
+  frontend
+    korisnicki_interfejs.py
 
 --Detaljna analiza arhitekture
 
@@ -44,7 +44,7 @@ Bekend dio zadužen je za komunikaciju između korisnika i OpenAI API-ja. Sastav
 
 Opis main.py fajla:
 
-+ Fajl obavlja koristi FastAPI za izgradnju RESTful API-ja;
++ Koristi FastAPI za izgradnju RESTful API-ja;
 + Definiše krajnju tačku /chat koji prihvata pravno pitanje i prosljeđuje ga OpenAI-ju;
 + Za validaciju korisničkog unosa koristi Pydantic (preciznije BaseModel);
 + Vraća HTTP izuzetak (grešku) koda 500 (značenja: Internal Server Error) u slučaju da OpenAI API ne bude bio u mogućnosti da odgovori.
