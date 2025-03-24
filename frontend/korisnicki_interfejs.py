@@ -83,7 +83,7 @@ for role, text in st.session_state.chat_history:
     else:
         st.markdown(f"**:robot_face: {role}:** {text}")
 
-# Dodavanje teksta povrh dugmadi za ocenjivanje
+# Dodavanje teksta povrh dugmadi za ocjenjivanje
         st.markdown("<div style='color:orange; font-size:18px;'>Da li vam je ovaj odgovor bio koristan ili ne?</div>",unsafe_allow_html=True)
         
 # Kreiranje dugmadi za like/dislike koja ne rade na njihov pritisak u istom redu sa minimalnim razmakom
@@ -96,7 +96,7 @@ for role, text in st.session_state.chat_history:
             """,
             unsafe_allow_html=True,
         )
-# opšta podešavanja za celi dokument su u nastavku
+# opšta podešavanja za cijeli dokument su u nastavku
 st.markdown("""
 <style>
     body {
