@@ -28,15 +28,15 @@ Ova aplikacija je implementirana koristeći FastAPI za bekend i Streamlit za fro
 --Struktura direktorijuma
 
 >Legal Advisor AI folder
--->> README.md
--->> requirements.txt
--->> bekend folder
----->>> pycache folder
----->>> .env fajl
----->>> main.py fajl
----->>> openai_api_konekcija.py fajl
--->> frontend
----->>> korisnicki_interfejs.py
+--> README.md
+--> requirements.txt
+--> bekend folder
+------> pycache folder
+------> .env fajl
+------> main.py fajl
+------> openai_api_konekcija.py fajl
+--> frontend
+------> korisnicki_interfejs.py
 
 --Detaljna analiza arhitekture
 
@@ -100,3 +100,10 @@ Za ove izazove rješenja su prikazana istim redosljedom kao i izazovi:
 3. Dešavaju se greške u konekciji sa OpenAI API-ju, stoga je dodata try-except struktura koja omogućava hvatanje grešaka i njihov ispis na uvid korisniku u UI. Takođe, uveden je HTTP try-except blok koji radi u slučaju da OpenAI ne bude bio u stanju da odgovori (kod 500 - Internal Server Error).
 4. U realizaciji ove aplikacije, OpenAI API ključ koji je prvobitno bio obezbijeđen za rješavanje ovog zadatka je bio, nažalost, nevalidan kada se ova aplikacija prvi put pokrenula. U cilju izlaska iz ovog problema, pribavio sam drugi OpenAI API ključ, za koji je trebao model da se promijeni (prvobitno sam koristio gpt-4, pa onda gpt-3.5-turbo u inicijalizaciji openAI objekta). Nakon promjene modela, dobio sam grešku 429 od strane OpenAI servera, koji podrazumijeva da je potrebno da se finansijski pretplatim kako bih mogao nastaviti sa konekcijom sa openAI GPT modelom: ovo služi kao dokaz da je konekcija protekla dobro sa OpenAI API-jem i da je u opticaju bio validan OpenAI API ključ, GPT model bi vratio željeni odgovor.
 
+--MOJI DOPRINOSI I DOPRINOSI CLAUDE AI U IZRADI CJELOKUPNOG KODA--
+
+Razvoj Legal Advisor AI aplikacije bio je izazovan i edukativan proces. Claude AI mi je pomogao u implementaciji RESTful API-ja koristeći FastAPI, kao i u razumIJevanju rukovanja greškama putem HTTPException. Takođe, uz njegovu pomoć savladao sam korišćenje st.session_state za čuvanje istorije razgovora u korisničkom interfejsu i safe_allow_html za formatirani prikaz sadržaja.
+
+Samostalno sam istražio OpenAI API, kreirao objekat i konfigurisao model za obradu pravnih upita. U frontend dijelu, kroz Streamlit dokumentaciju, upoznao sam se sa dodavanjem emoji simbola, input polja, sidebar-a i dugmadi, a za stilizaciju sam se oslanjao na prethodno znanje iz HTML-a, CSS-a i Djanga, stečeno tokom mog prethodnog razvoja aplikacije za kardiologiju (KardiologAI).
+
+Kombinovanjem naučenog i postojećeg iskustva uspješno sam razvio aplikaciju koja omogućava interaktivno pružanje pravnih savjeta.
