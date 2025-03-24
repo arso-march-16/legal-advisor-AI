@@ -27,18 +27,16 @@ Ova aplikacija je implementirana koristeći FastAPI za bekend i Streamlit za fro
 
 --Struktura direktorijuma
 
-=== "Legal Advisor AI"
-    - README.md
-    - requirements.txt
-
-=== "Bekend"
-    - __pycache__/
-    - .env
-    - main.py
-    - openai_api_konekcija.py
-
-=== "Frontend"
-    - korisnicki_interfejs.py
+📁 Legal Advisor AI/
+├── 📄 README.md
+├── 📄 requirements.txt
+├── 📁 bekend/
+│   ├── 📁 __pycache__/
+│   ├── 📄 .env
+│   ├── 📄 main.py
+│   └── 📄 openai_api_konekcija.py
+└── 📁 frontend/
+    └── 📄 korisnicki_interfejs.py
 
 --Detaljna analiza arhitekture
 
